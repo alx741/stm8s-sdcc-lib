@@ -23,8 +23,34 @@
 
 #pragma once
 
-volatile __at (0x5005) char PB_ODR;
-volatile __at (0x5006) char PB_IDR;
-volatile __at (0x5007) char PB_DDR;
-volatile __at (0x5008) char PB_CR1;
-volatile __at (0x5009) char PB_CR2;
+#include <stdint.h>
+
+
+/*
+ * Memory map
+ */
+#define _RAM_BASE           0x0000
+#define _EEPROM_BASE        0x4000
+#define _OPTION_BYTES_BASE  0x4800
+#define _UNIQUE_ID_BASE     0x4865
+#define _GPIO_PERIPH_BASE   0x5000
+
+
+/*
+ * GPIO ports
+ */
+typedef struct
+{
+    uint8_t ODR;
+    uint8_t IDR;
+    uint8_t DDR;
+    uint8_t CR1;
+    uint8_t CR2;
+} GPIO_PORT_t;
+
+volatile __at(_GPIO_PERIPH_BASE + 0)  GPIO_PORT_t PORTA;
+volatile __at(_GPIO_PERIPH_BASE + 5)  GPIO_PORT_t PORTB;
+volatile __at(_GPIO_PERIPH_BASE + 10) GPIO_PORT_t PORTC;
+volatile __at(_GPIO_PERIPH_BASE + 15) GPIO_PORT_t PORTD;
+volatile __at(_GPIO_PERIPH_BASE + 20) GPIO_PORT_t PORTE;
+volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
