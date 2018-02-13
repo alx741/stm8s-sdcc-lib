@@ -34,5 +34,4 @@ Compile with:
 
 Flash with:
 
-    $ sdcc -lstm8 -mstm8 --out-fmt-ihx main.c -o main
 	$ stm8flash -pstm8s103f3 -cstlinkv2 -w main.ihx
