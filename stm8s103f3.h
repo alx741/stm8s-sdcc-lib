@@ -56,8 +56,36 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
  */
 typedef struct
 {
-    uint8_t ODR;
-    uint8_t IDR;
+    union
+    {
+        uint8_t ODR;
+        struct
+        {
+            unsigned OP0 : 1;
+            unsigned OP1 : 1;
+            unsigned OP2 : 1;
+            unsigned OP3 : 1;
+            unsigned OP4 : 1;
+            unsigned OP5 : 1;
+            unsigned OP6 : 1;
+            unsigned OP7 : 1;
+        };
+    };
+    union
+    {
+        uint8_t IDR;
+        struct
+        {
+            unsigned IP0 : 1;
+            unsigned IP1 : 1;
+            unsigned IP2 : 1;
+            unsigned IP3 : 1;
+            unsigned IP4 : 1;
+            unsigned IP5 : 1;
+            unsigned IP6 : 1;
+            unsigned IP7 : 1;
+        };
+    };
     uint8_t DDR;
     uint8_t CR1;
     uint8_t CR2;
