@@ -37,6 +37,21 @@
 
 
 /*
+ * Unique ID
+ */
+typedef struct
+{
+    uint16_t X_COORD_WAFER;
+    uint16_t Y_COORD_WAFER;
+    uint8_t  WAFER_NUMBER;
+    uint32_t LOT_NUMBER_LOW;
+    uint32_t LOT_NUMBER_HIGH;
+} UNIQUE_ID_t;
+
+volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
+
+
+/*
  * GPIO ports
  */
 typedef struct
