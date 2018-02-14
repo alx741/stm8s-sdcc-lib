@@ -37,6 +37,8 @@
 #define _CPU_ITC_BASE       0x7F00
 
 
+
+
 /*
  * Unique ID
  */
@@ -52,9 +54,53 @@ typedef struct
 volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 
 
+
+
 /*
  * GPIO ports
  */
+
+// Available Data Directions
+//
+// e.g. Pin PA1 as input and Pin PC5 as output
+//   ...
+//   PORTA.DDR1 = INPUT_MODE;
+//   PORTC.DDR5 = OUTPUT_MODE;
+//   ...
+#define   INPUT_MODE    0
+#define   OUTPUT_MODE   1
+
+// Available CR1 I/O modes
+//
+// e.g. Pin PA1 as floating input and Pin PC5 as output with push-pull
+//   ...
+//   PORTA.DDR1 = INPUT_MODE;
+//   PORTC.DDR5 = OUTPUT_MODE;
+//
+//   PORTA.CR11 = INPUT_FLOATING;
+//   PORTC.CR15 = OUTPUT_PUSH-PULL;
+//   ...
+#define   INPUT_FLOATING      0
+#define   INPUT_PULL-UP       1
+#define   OUTPUT_OPEN_DRAIN   0
+#define   OUTPUT_PUSH-PULL    1
+
+// Available CR2 I/O interrupts and speed
+//
+// e.g. Pin PA1 as input with interrupt and Pin PC5 as output at 10MHz
+//   ...
+//   PORTA.DDR1 = INPUT_MODE;
+//   PORTC.DDR5 = OUTPUT_MODE;
+//
+//   PORTA.CR21 = INPUT_INTERRUPT_ENABLED;
+//   PORTC.CR25 = OUTPUT_10MHZ;
+//   ...
+#define   INPUT_INTERRUPT_ENABLED     0
+#define   INPUT_INTERRUPT_DISABLED    1
+#define   OUTPUT_2MHZ                 0
+#define   OUTPUT_10MHZ                1
+
+
 typedef struct
 {
     union
@@ -62,14 +108,14 @@ typedef struct
         uint8_t ODR;
         struct
         {
-            unsigned OUT0 : 1;
-            unsigned OUT1 : 1;
-            unsigned OUT2 : 1;
-            unsigned OUT3 : 1;
-            unsigned OUT4 : 1;
-            unsigned OUT5 : 1;
-            unsigned OUT6 : 1;
-            unsigned OUT7 : 1;
+            unsigned ODR0 : 1;
+            unsigned ODR1 : 1;
+            unsigned ODR2 : 1;
+            unsigned ODR3 : 1;
+            unsigned ODR4 : 1;
+            unsigned ODR5 : 1;
+            unsigned ODR6 : 1;
+            unsigned ODR7 : 1;
         };
     };
     union
@@ -77,27 +123,71 @@ typedef struct
         uint8_t IDR;
         struct
         {
-            unsigned IN0 : 1;
-            unsigned IN1 : 1;
-            unsigned IN2 : 1;
-            unsigned IN3 : 1;
-            unsigned IN4 : 1;
-            unsigned IN5 : 1;
-            unsigned IN6 : 1;
-            unsigned IN7 : 1;
+            unsigned IDR0 : 1;
+            unsigned IDR1 : 1;
+            unsigned IDR2 : 1;
+            unsigned IDR3 : 1;
+            unsigned IDR4 : 1;
+            unsigned IDR5 : 1;
+            unsigned IDR6 : 1;
+            unsigned IDR7 : 1;
         };
     };
-    uint8_t DDR;
-    uint8_t CR1;
-    uint8_t CR2;
+    union
+    {
+        uint8_t DDR;
+        struct
+        {
+            unsigned DDR0 : 1;
+            unsigned DDR1 : 1;
+            unsigned DDR2 : 1;
+            unsigned DDR3 : 1;
+            unsigned DDR4 : 1;
+            unsigned DDR5 : 1;
+            unsigned DDR6 : 1;
+            unsigned DDR7 : 1;
+        };
+    };
+    union
+    {
+        uint8_t CR1;
+        struct
+        {
+            unsigned CR10 : 1;
+            unsigned CR11 : 1;
+            unsigned CR12 : 1;
+            unsigned CR13 : 1;
+            unsigned CR14 : 1;
+            unsigned CR15 : 1;
+            unsigned CR16 : 1;
+            unsigned CR17 : 1;
+        };
+    };
+    union
+    {
+        uint8_t CR2;
+        struct
+        {
+            unsigned CR20 : 1;
+            unsigned CR21 : 1;
+            unsigned CR22 : 1;
+            unsigned CR23 : 1;
+            unsigned CR24 : 1;
+            unsigned CR25 : 1;
+            unsigned CR26 : 1;
+            unsigned CR27 : 1;
+        };
+    };
 } GPIO_PORT_t;
 
-volatile __at(_GPIO_PERIPH_BASE + 0)  GPIO_PORT_t PORTA;
-volatile __at(_GPIO_PERIPH_BASE + 5)  GPIO_PORT_t PORTB;
-volatile __at(_GPIO_PERIPH_BASE + 10) GPIO_PORT_t PORTC;
-volatile __at(_GPIO_PERIPH_BASE + 15) GPIO_PORT_t PORTD;
-volatile __at(_GPIO_PERIPH_BASE + 20) GPIO_PORT_t PORTE;
-volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
+volatile __at(_GPIO_PERIPH_BASE + 0)  GPIO_PORT_t   PORTA;
+volatile __at(_GPIO_PERIPH_BASE + 5)  GPIO_PORT_t   PORTB;
+volatile __at(_GPIO_PERIPH_BASE + 10) GPIO_PORT_t   PORTC;
+volatile __at(_GPIO_PERIPH_BASE + 15) GPIO_PORT_t   PORTD;
+volatile __at(_GPIO_PERIPH_BASE + 20) GPIO_PORT_t   PORTE;
+volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t   PORTF;
+
+
 
 
 /*
@@ -133,6 +223,28 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
 #define   IRQ_TIM4                       23
 #define   IRQ_FLASH                      24
 
+// Available Software Priorities for ITC_SPR registers
+//
+// e.g. Use level 2 priority for external PORTA interrupts
+//   ...
+//   ITC_SPR.EXTI0_PORTA = SP_LEVEL_2;
+//   ...
+#define   SP_LEVEL_0   0b10
+#define   SP_LEVEL_1   0b01
+#define   SP_LEVEL_2   0b00
+#define   SP_LEVEL_3   0b11
+
+// Available external interrupt sensitivities
+//
+// e.g. Trigger interrupt on rising edge only for external PORTA pins:
+//   ...
+//   EXTI_CR1.PAIS = RISING_EDGE;
+//   ...
+#define   FALLING_EDGE_LOW_LEVEL   0b00
+#define   RISING_EDGE              0b01
+#define   FALLING_EDGE             0b10
+#define   RISING_FALLING_EDGE      0b11
+
 typedef struct
 {
     unsigned TLI                  : 2;
@@ -162,21 +274,6 @@ typedef struct
     unsigned FLASH                : 2;
 } ITC_SPR_t;
 
-volatile __at(0x7F0A) uint8_t   CCR;
-volatile __at(0x7F70) ITC_SPR_t ITC_SPR;
-
-// Available Software Priorities for ITC_SPR registers
-//
-// e.g. Use level 2 priority for external PORTA interrupts
-//   ...
-//   ITC_SPR.EXTI0_PORTA = SP_LEVEL_2;
-//   ...
-#define   SP_LEVEL_0   0b10
-#define   SP_LEVEL_1   0b01
-#define   SP_LEVEL_2   0b00
-#define   SP_LEVEL_3   0b11
-
-
 typedef struct
 {
     unsigned PAIS  : 2;
@@ -191,16 +288,7 @@ typedef struct
     unsigned TLIS  : 2;
 } EXTI_CR2_t;
 
-volatile __at(0x50A0) EXTI_CR1_t EXTI_CR1;
-volatile __at(0x50A1) EXTI_CR2_t EXTI_CR2;
-
-// Available external interrupt sensitivities
-//
-// e.g. Trigger interrupt on rising edge only for external PORTA pins:
-//   ...
-//   EXTI_CR1.PAIS = RISING_EDGE;
-//   ...
-#define   FALLING_EDGE_LOW_LEVEL   0b00
-#define   RISING_EDGE              0b01
-#define   FALLING_EDGE             0b10
-#define   RISING_FALLING_EDGE      0b11
+volatile __at(0x7F0A) uint8_t     CCR;
+volatile __at(0x7F70) ITC_SPR_t   ITC_SPR;
+volatile __at(0x50A0) EXTI_CR1_t   EXTI_CR1;
+volatile __at(0x50A1) EXTI_CR2_t   EXTI_CR2;
