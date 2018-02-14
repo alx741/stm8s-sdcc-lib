@@ -399,12 +399,12 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t   PORTF;
 //
 // e.g. Trigger interrupt on rising edge only for external PORTA pins:
 //   ...
-//   EXTI_CR1.PAIS = RISING_EDGE;
+//   EXTI_CR1.PAIS = EXTI_RISING_EDGE;
 //   ...
-#define   FALLING_EDGE_LOW_LEVEL   0b00
-#define   RISING_EDGE              0b01
-#define   FALLING_EDGE             0b10
-#define   RISING_FALLING_EDGE      0b11
+#define   EXTI_FALLING_EDGE_LOW_LEVEL   0b00
+#define   EXTI_RISING_EDGE              0b01
+#define   EXTI_FALLING_EDGE             0b10
+#define   EXTI_RISING_FALLING_EDGE      0b11
 
 typedef struct
 {
