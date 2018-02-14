@@ -38,11 +38,8 @@
 
 
 /*
- * Registers
- * ---------
+ * Unique ID
  */
-
-/* Unique ID */
 typedef struct
 {
     uint16_t X_COORD_WAFER;
@@ -55,7 +52,9 @@ typedef struct
 volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 
 
-/* GPIO ports */
+/*
+ * GPIO ports
+ */
 typedef struct
 {
     union
@@ -101,7 +100,9 @@ volatile __at(_GPIO_PERIPH_BASE + 20) GPIO_PORT_t PORTE;
 volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
 
 
-/* Interrupt controller */
+/*
+ * Interrupt controller
+ */
 #define IRQ0  0        #define IRQ11 11      #define IRQ22 22
 #define IRQ1  1        #define IRQ12 12      #define IRQ23 23
 #define IRQ2  2        #define IRQ13 13      #define IRQ24 24
@@ -139,36 +140,31 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
 
 typedef struct
 {
-    unsigned VECT0SPR  : 2;
-    unsigned VECT1SPR  : 2;
-    unsigned VECT2SPR  : 2;
-    unsigned VECT3SPR  : 2;
-    unsigned VECT4SPR  : 2;
-    unsigned VECT5SPR  : 2;
-    unsigned VECT6SPR  : 2;
-    unsigned VECT7SPR  : 2;
-    unsigned VECT8SPR  : 2;
-    unsigned VECT9SPR  : 2;
-    unsigned VECT10SPR : 2;
-    unsigned VECT11SPR : 2;
-    unsigned VECT12SPR : 2;
-    unsigned VECT13SPR : 2;
-    unsigned VECT14SPR : 2;
-    unsigned VECT15SPR : 2;
-    unsigned VECT16SPR : 2;
-    unsigned VECT17SPR : 2;
-    unsigned VECT18SPR : 2;
-    unsigned VECT19SPR : 2;
-    unsigned VECT20SPR : 2;
-    unsigned VECT21SPR : 2;
-    unsigned VECT22SPR : 2;
-    unsigned VECT23SPR : 2;
-    unsigned VECT24SPR : 2;
-    unsigned VECT25SPR : 2;
-    unsigned VECT26SPR : 2;
-    unsigned VECT27SPR : 2;
-    unsigned VECT28SPR : 2;
-    unsigned VECT29SPR : 2;
+    unsigned SP_TLI                  : 2;
+    unsigned SP_AWU                  : 2;
+    unsigned SP_CLK                  : 2;
+    unsigned SP_EXTI0_PORTA          : 2;
+    unsigned SP_EXTI1_PORTB          : 2;
+    unsigned SP_EXTI2_PORTC          : 2;
+    unsigned SP_EXTI3_PORTD          : 2;
+    unsigned SP_EXTI4_PORTE          : 2;
+    unsigned                         : 2;
+    unsigned                         : 2;
+    unsigned SP_SPI_END_TRANSFER     : 2;
+    unsigned SP_TIM1                 : 2;
+    unsigned SP_TIM1_CAPTURE_COMPARE : 2;
+    unsigned SP_TIM2                 : 2;
+    unsigned SP_TIM2_CAPTURE_COMPARE : 2;
+    unsigned                         : 2;
+    unsigned                         : 2;
+    unsigned SP_UART1_TX_COMPLETE    : 2;
+    unsigned SP_UART1_DATA_FULL      : 2;
+    unsigned SP_I2C                  : 2;
+    unsigned                         : 2;
+    unsigned                         : 2;
+    unsigned SP_ADC1                 : 2;
+    unsigned SP_TIM4                 : 2;
+    unsigned SP_FLASH                : 2;
 } ITC_SPR_t;
 
 volatile __at(0x7F0A) uint8_t   CCR;
@@ -176,7 +172,7 @@ volatile __at(0x7F70) ITC_SPR_t ITC_SPR;
 
 // Available Software Priorities for ITC_SPR registers
 //
-// e.g.   ITC_SPR.VECT4SPR = SP_LEVEL_2;
+// e.g.   ITC_SPR.SP_EXTI0_PORTA = SP_LEVEL_2;
 #define SP_LEVEL_0  0b10
 #define SP_LEVEL_1  0b01
 #define SP_LEVEL_2  0b00
