@@ -71,6 +71,26 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 #define   CLK_LSI      0xD2
 #define   CLK_HSE      0xB4
 
+// Available clock dividers
+//
+// e.g. Internal and CPU clock without divider (Max freq.)
+//   ...
+//   CLK_CKDIVR.HSIDIV = HSIDIV_0;
+//   CLK_CKDIVR.CPUDIV = CPUDIV_0;
+//   ...
+#define   HSIDIV_0       0b00
+#define   HSIDIV_2       0b01
+#define   HSIDIV_4       0b10
+#define   HSIDIV_8       0b11
+#define   CPUDIV_0       0b000
+#define   CPUDIV_2       0b001
+#define   CPUDIV_4       0b010
+#define   CPUDIV_8       0b011
+#define   CPUDIV_16      0b100
+#define   CPUDIV_32      0b101
+#define   CPUDIV_64      0b110
+#define   CPUDIV_128     0b111
+
 typedef struct
 {
     unsigned HSIEN  : 1;
@@ -87,10 +107,26 @@ typedef struct
     unsigned HSERDY : 1;
 } CLK_ECKR_t;
 
-volatile __at(0x50C0) CLK_ICKR_t   CLK_ICKR;
-volatile __at(0x50C1) CLK_ECKR_t   CLK_ECKR;
-volatile __at(0x50C3) uint8_t      CLK_CMSR;
-volatile __at(0x50C3) uint8_t      CLK_SWR;
+typedef struct
+{
+    unsigned SWBSY : 1;
+    unsigned SWEN  : 1;
+    unsigned SWIEN : 1;
+    unsigned SWIF  : 1;
+} CLK_SWCR_t;
+
+typedef struct
+{
+    unsigned CPUDIV : 3;
+    unsigned HSIDIV : 2;
+} CLK_CKDIVR_t;
+
+volatile __at(0x50C0) CLK_ICKR_t     CLK_ICKR;
+volatile __at(0x50C1) CLK_ECKR_t     CLK_ECKR;
+volatile __at(0x50C3) uint8_t        CLK_CMSR;
+volatile __at(0x50C4) uint8_t        CLK_SWR;
+volatile __at(0x50C5) CLK_SWCR_t     CLK_SWCR;
+volatile __at(0x50C6) CLK_CKDIVR_t   CLK_CKDIVR;
 
 
 
