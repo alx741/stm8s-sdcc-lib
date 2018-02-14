@@ -57,6 +57,7 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 
 
 
+
 /*
  * Clock
  */
@@ -204,6 +205,7 @@ volatile __at(_CLK_BASE + 0x08) CLK_CSSR_t      CLK_CSSR;
 volatile __at(_CLK_BASE + 0x09) CLK_CCOR_t      CLK_CCOR;
 volatile __at(_CLK_BASE + 0x0C) CLK_HSITRIMR_t  CLK_HSITRIMR;
 volatile __at(_CLK_BASE + 0x0D) CLK_SWIMCCR_t   CLK_SWIMCCR;
+
 
 
 
@@ -453,3 +455,21 @@ volatile __at(0x7F0A) uint8_t      CCR;
 volatile __at(0x7F70) ITC_SPR_t    ITC_SPR;
 volatile __at(0x50A0) EXTI_CR1_t   EXTI_CR1;
 volatile __at(0x50A1) EXTI_CR2_t   EXTI_CR2;
+
+
+
+
+/*
+ * Reset
+ */
+
+typedef struct
+{
+    unsigned WWDGF  : 1;
+    unsigned IWDGF  : 1;
+    unsigned ILLOPF : 1;
+    unsigned SWIMF  : 1;
+    unsigned EMCF   : 1;
+} RST_SR_t;
+
+volatile __at(0x50B3) RST_SR_t   RST_SR;
