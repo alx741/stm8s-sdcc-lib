@@ -91,6 +91,25 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 #define   CPUDIV_64      0b110
 #define   CPUDIV_128     0b111
 
+// Available output clock sources
+//
+// e.g. Use the LSI clock as output clock
+//   ...
+//   CLK_CCOR.CCOSEL = CCOR_LSI;
+//   ...
+#define   CCOR_HSIDIV        0b0000
+#define   CCOR_LSI           0b0001
+#define   CCOR_HSE           0b0010
+#define   CCOR_CPU_DIV_0     0b0100
+#define   CCOR_CPU_DIV_2     0b0101
+#define   CCOR_CPU_DIV_4     0b0110
+#define   CCOR_CPU_DIV_8     0b0111
+#define   CCOR_CPU_DIV_16    0b1000
+#define   CCOR_CPU_DIV_32    0b1001
+#define   CCOR_CPU_DIV_64    0b1010
+#define   CCOR_HSI           0b1011
+#define   CCOR_MASTER        0b1100
+
 typedef struct
 {
     unsigned HSIEN  : 1;
@@ -121,12 +140,56 @@ typedef struct
     unsigned HSIDIV : 2;
 } CLK_CKDIVR_t;
 
-volatile __at(0x50C0) CLK_ICKR_t     CLK_ICKR;
-volatile __at(0x50C1) CLK_ECKR_t     CLK_ECKR;
-volatile __at(0x50C3) uint8_t        CLK_CMSR;
-volatile __at(0x50C4) uint8_t        CLK_SWR;
-volatile __at(0x50C5) CLK_SWCR_t     CLK_SWCR;
-volatile __at(0x50C6) CLK_CKDIVR_t   CLK_CKDIVR;
+typedef struct
+{
+    unsigned CSSEN  : 1;
+    unsigned AUX    : 1;
+    unsigned CSSDIE : 1;
+    unsigned CSSD   : 1;
+} CLK_CSSR_t;
+
+typedef struct
+{
+    unsigned CCOEN  : 1;
+    unsigned CCOSEL : 4;
+    unsigned CCORDY : 1;
+    unsigned CCOBSY : 1;
+} CLK_CCOR_t;
+
+typedef struct
+{
+    unsigned PCKEN1_I2C         : 1;
+    unsigned PCKEN1_SPI         : 1;
+    unsigned PCKEN1_UART1_UART2 : 1;
+    unsigned PCKEN1_UART3_UART4 : 1;
+    unsigned PCKEN1_TIM4_TIM6   : 1;
+    unsigned PCKEN1_TIM2_TIM5   : 1;
+    unsigned PCKEN1_TIM3        : 1;
+    unsigned PCKEN1_TIM1        : 1;
+} CLK_PCKENR1_t;
+
+typedef struct
+{
+    unsigned              : 1;
+    unsigned              : 1;
+    unsigned PCKEN2_AWU   : 1;
+    unsigned PCKEN2_ADC   : 1;
+    unsigned              : 1;
+    unsigned              : 1;
+    unsigned              : 1;
+    unsigned PCKEN2_CAN   : 1;
+} CLK_PCKENR2_t;
+
+volatile __at(0x50C0) CLK_ICKR_t      CLK_ICKR;
+volatile __at(0x50C1) CLK_ECKR_t      CLK_ECKR;
+volatile __at(0x50C3) uint8_t         CLK_CMSR;
+volatile __at(0x50C4) uint8_t         CLK_SWR;
+volatile __at(0x50C5) CLK_SWCR_t      CLK_SWCR;
+volatile __at(0x50C6) CLK_CKDIVR_t    CLK_CKDIVR;
+volatile __at(0x50C7) CLK_PCKENR1_t   CLK_PCKENR1;
+volatile __at(0x50C8) CLK_CSSR_t      CLK_CSSR;
+volatile __at(0x50C9) CLK_CCOR_t      CLK_CCOR;
+volatile __at(0x50CA) CLK_PCKENR2_t   CLK_PCKENR2;
 
 
 
