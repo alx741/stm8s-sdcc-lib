@@ -181,16 +181,29 @@ typedef struct
     unsigned PCKEN2_CAN   : 1;
 } CLK_PCKENR2_t;
 
-volatile __at(0x50C0) CLK_ICKR_t      CLK_ICKR;
-volatile __at(0x50C1) CLK_ECKR_t      CLK_ECKR;
-volatile __at(0x50C3) uint8_t         CLK_CMSR;
-volatile __at(0x50C4) uint8_t         CLK_SWR;
-volatile __at(0x50C5) CLK_SWCR_t      CLK_SWCR;
-volatile __at(0x50C6) CLK_CKDIVR_t    CLK_CKDIVR;
-volatile __at(0x50C7) CLK_PCKENR1_t   CLK_PCKENR1;
-volatile __at(0x50C8) CLK_CSSR_t      CLK_CSSR;
-volatile __at(0x50C9) CLK_CCOR_t      CLK_CCOR;
-volatile __at(0x50CA) CLK_PCKENR2_t   CLK_PCKENR2;
+typedef struct
+{
+    unsigned HSITRIM  : 4;
+} CLK_HSITRIMR_t;
+
+typedef struct
+{
+    unsigned SWIMCLK  : 1;
+} CLK_SWIMCCR_t;
+
+#define _CLK_BASE   0x50C0
+volatile __at(_CLK_BASE + 0x00) CLK_ICKR_t      CLK_ICKR;
+volatile __at(_CLK_BASE + 0x01) CLK_ECKR_t      CLK_ECKR;
+volatile __at(_CLK_BASE + 0x03) uint8_t         CLK_CMSR;
+volatile __at(_CLK_BASE + 0x04) uint8_t         CLK_SWR;
+volatile __at(_CLK_BASE + 0x05) CLK_SWCR_t      CLK_SWCR;
+volatile __at(_CLK_BASE + 0x06) CLK_CKDIVR_t    CLK_CKDIVR;
+volatile __at(_CLK_BASE + 0x07) CLK_PCKENR1_t   CLK_PCKENR1;
+volatile __at(_CLK_BASE + 0x0A) CLK_PCKENR2_t   CLK_PCKENR2;
+volatile __at(_CLK_BASE + 0x08) CLK_CSSR_t      CLK_CSSR;
+volatile __at(_CLK_BASE + 0x09) CLK_CCOR_t      CLK_CCOR;
+volatile __at(_CLK_BASE + 0x0C) CLK_HSITRIMR_t  CLK_HSITRIMR;
+volatile __at(_CLK_BASE + 0x0D) CLK_SWIMCCR_t   CLK_SWIMCCR;
 
 
 
