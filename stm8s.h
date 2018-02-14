@@ -449,7 +449,7 @@ typedef struct
     unsigned TLIS  : 2;
 } EXTI_CR2_t;
 
-volatile __at(0x7F0A) uint8_t     CCR;
-volatile __at(0x7F70) ITC_SPR_t   ITC_SPR;
+volatile __at(0x7F0A) uint8_t      CCR;
+volatile __at(0x7F70) ITC_SPR_t    ITC_SPR;
 volatile __at(0x50A0) EXTI_CR1_t   EXTI_CR1;
 volatile __at(0x50A1) EXTI_CR2_t   EXTI_CR2;

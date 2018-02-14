@@ -21,7 +21,7 @@ void delay(void)
 int main()
 {
 
-    PORTB.DDR5 = OUTPUT_MODE;
+    PORTB.DDR5 = DDR_OUTPUT_MODE;
     PORTB.CR15 = CR1_OUTPUT_PUSH_PULL;
 
     while (1)
