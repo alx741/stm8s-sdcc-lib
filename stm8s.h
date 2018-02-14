@@ -95,8 +95,8 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 //   PORTA.CR21 = INPUT_INTERRUPT_ENABLED;
 //   PORTC.CR25 = OUTPUT_10MHZ;
 //   ...
-#define   CR2_INPUT_INTERRUPT_ENABLED     0
-#define   CR2_INPUT_INTERRUPT_DISABLED    1
+#define   CR2_INPUT_INTERRUPT_DISABLED    0
+#define   CR2_INPUT_INTERRUPT_ENABLED     1
 #define   CR2_OUTPUT_2MHZ                 0
 #define   CR2_OUTPUT_10MHZ                1
 
@@ -194,9 +194,19 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t   PORTF;
  * Interrupt controller
  */
 
+#define enable_interrupts()  {__asm__("rim\n");}
+#define disable_interrupts() {__asm__("sim\n");}
+
 // Available IRQs
 //
 // e.g. Create an ISR for external PORTA interrupts
+//   ...
+//   int main()
+//   {
+//      ...
+//      enable_interrupts();
+//      ...
+//   }
 //   ...
 //   void custom_isr(void) __interrupt(IRQ_EXTI0_PORTA)
 //   {
