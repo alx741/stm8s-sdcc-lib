@@ -18,7 +18,7 @@
  * This file declares registers for the STM8S103F3 device
  *
  * To use it, include this file in your C code:
- *      #include "/path/stm8s103f3.h"
+ *      #include "some/path/stm8s103f3.h"
  */
 
 #pragma once
@@ -117,7 +117,13 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
 
 // Available IRQs
 //
-// e.g.   void custom_isr(void) __interrupt(IRQ_EXTI0_PORTA) { }
+// e.g. Create an ISR for external PORTA interrupts
+//   ...
+//   void custom_isr(void) __interrupt(IRQ_EXTI0_PORTA)
+//   {
+//       // Handler code here
+//   }
+//   ...
 #define   IRQ_TLI                        0
 #define   IRQ_AWU                        1
 #define   IRQ_CLK                        2
@@ -140,31 +146,31 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
 
 typedef struct
 {
-    unsigned SP_TLI                  : 2;
-    unsigned SP_AWU                  : 2;
-    unsigned SP_CLK                  : 2;
-    unsigned SP_EXTI0_PORTA          : 2;
-    unsigned SP_EXTI1_PORTB          : 2;
-    unsigned SP_EXTI2_PORTC          : 2;
-    unsigned SP_EXTI3_PORTD          : 2;
-    unsigned SP_EXTI4_PORTE          : 2;
-    unsigned                         : 2;
-    unsigned                         : 2;
-    unsigned SP_SPI_END_TRANSFER     : 2;
-    unsigned SP_TIM1                 : 2;
-    unsigned SP_TIM1_CAPTURE_COMPARE : 2;
-    unsigned SP_TIM2                 : 2;
-    unsigned SP_TIM2_CAPTURE_COMPARE : 2;
-    unsigned                         : 2;
-    unsigned                         : 2;
-    unsigned SP_UART1_TX_COMPLETE    : 2;
-    unsigned SP_UART1_DATA_FULL      : 2;
-    unsigned SP_I2C                  : 2;
-    unsigned                         : 2;
-    unsigned                         : 2;
-    unsigned SP_ADC1                 : 2;
-    unsigned SP_TIM4                 : 2;
-    unsigned SP_FLASH                : 2;
+    unsigned TLI                  : 2;
+    unsigned AWU                  : 2;
+    unsigned CLK                  : 2;
+    unsigned EXTI0_PORTA          : 2;
+    unsigned EXTI1_PORTB          : 2;
+    unsigned EXTI2_PORTC          : 2;
+    unsigned EXTI3_PORTD          : 2;
+    unsigned EXTI4_PORTE          : 2;
+    unsigned                      : 2;
+    unsigned                      : 2;
+    unsigned SPI_END_TRANSFER     : 2;
+    unsigned TIM1                 : 2;
+    unsigned TIM1_CAPTURE_COMPARE : 2;
+    unsigned TIM2                 : 2;
+    unsigned TIM2_CAPTURE_COMPARE : 2;
+    unsigned                      : 2;
+    unsigned                      : 2;
+    unsigned UART1_TX_COMPLETE    : 2;
+    unsigned UART1_DATA_FULL      : 2;
+    unsigned I2C                  : 2;
+    unsigned                      : 2;
+    unsigned                      : 2;
+    unsigned ADC1                 : 2;
+    unsigned TIM4                 : 2;
+    unsigned FLASH                : 2;
 } ITC_SPR_t;
 
 volatile __at(0x7F0A) uint8_t   CCR;
@@ -172,12 +178,40 @@ volatile __at(0x7F70) ITC_SPR_t ITC_SPR;
 
 // Available Software Priorities for ITC_SPR registers
 //
-// e.g.   ITC_SPR.SP_EXTI0_PORTA = SP_LEVEL_2;
-#define SP_LEVEL_0  0b10
-#define SP_LEVEL_1  0b01
-#define SP_LEVEL_2  0b00
-#define SP_LEVEL_3  0b11
+// e.g. Use level 2 priority for external PORTA interrupts
+//   ...
+//   ITC_SPR.EXTI0_PORTA = SP_LEVEL_2;
+//   ...
+#define   SP_LEVEL_0   0b10
+#define   SP_LEVEL_1   0b01
+#define   SP_LEVEL_2   0b00
+#define   SP_LEVEL_3   0b11
 
 
-volatile __at(0x50A0) uint8_t EXTI_CR1;
-volatile __at(0x50A1) uint8_t EXTI_CR2;
+typedef struct
+{
+    unsigned PAIS  : 2;
+    unsigned PBIS  : 2;
+    unsigned PCIS  : 2;
+    unsigned PDIS  : 2;
+} EXTI_CR1_t;
+
+typedef struct
+{
+    unsigned PEIS  : 2;
+    unsigned TLIS  : 2;
+} EXTI_CR2_t;
+
+volatile __at(0x50A0) EXTI_CR1_t EXTI_CR1;
+volatile __at(0x50A1) EXTI_CR2_t EXTI_CR2;
+
+// Available external interrupt sensitivities
+//
+// e.g. Trigger interrupt on rising edge only for external PORTA pins:
+//   ...
+//   EXTI_CR1.PAIS = RISING_EDGE;
+//   ...
+#define   FALLING_EDGE_LOW_LEVEL   0b00
+#define   RISING_EDGE              0b01
+#define   FALLING_EDGE             0b10
+#define   RISING_FALLING_EDGE      0b11
