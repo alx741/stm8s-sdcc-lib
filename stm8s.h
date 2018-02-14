@@ -57,6 +57,42 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 
 
 
+/*
+ * Clock
+ */
+
+// Available master clocks
+//
+// e.g. Use External crystal (HSE)
+//   ...
+//   CLK_SWR = CLK_HSE;
+//   ...
+#define   CLK_HSI      0xE1
+#define   CLK_LSI      0xD2
+#define   CLK_HSE      0xB4
+
+typedef struct
+{
+    unsigned HSIEN  : 1;
+    unsigned HSIRDY : 1;
+    unsigned FHW    : 1;
+    unsigned LSIEN  : 1;
+    unsigned LSIRDY : 1;
+    unsigned REGAH  : 1;
+} CLK_ICKR_t;
+
+typedef struct
+{
+    unsigned HSEEN  : 1;
+    unsigned HSERDY : 1;
+} CLK_ECKR_t;
+
+volatile __at(0x50C0) CLK_ICKR_t   CLK_ICKR;
+volatile __at(0x50C1) CLK_ECKR_t   CLK_ECKR;
+volatile __at(0x50C3) uint8_t      CLK_CMSR;
+volatile __at(0x50C3) uint8_t      CLK_SWR;
+
+
 
 /*
  * GPIO ports
@@ -69,8 +105,8 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 //   PORTA.DDR1 = INPUT_MODE;
 //   PORTC.DDR5 = OUTPUT_MODE;
 //   ...
-#define   INPUT_MODE    0
-#define   OUTPUT_MODE   1
+#define   DDR_INPUT_MODE    0
+#define   DDR_OUTPUT_MODE   1
 
 // Available CR1 I/O modes
 //
@@ -239,12 +275,12 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t   PORTF;
 //
 // e.g. Use level 2 priority for external PORTA interrupts
 //   ...
-//   ITC_SPR.EXTI0_PORTA = SP_LEVEL_2;
+//   ITC_SPR.EXTI0_PORTA = SPR_LEVEL_2;
 //   ...
-#define   SP_LEVEL_0   0b10
-#define   SP_LEVEL_1   0b01
-#define   SP_LEVEL_2   0b00
-#define   SP_LEVEL_3   0b11
+#define   SPR_LEVEL_0   0b10
+#define   SPR_LEVEL_1   0b01
+#define   SPR_LEVEL_2   0b00
+#define   SPR_LEVEL_3   0b11
 
 // Available external interrupt sensitivities
 //
