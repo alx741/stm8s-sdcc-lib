@@ -15,10 +15,10 @@
 
 
 /*
- * This file declares registers for the STM8S103F3 device
+ * Registers and configuration values for STM8S devices
  *
  * To use it, include this file in your C code:
- *      #include "some/path/stm8s103f3.h"
+ *      #include "some/path/stm8s.h"
  */
 
 #pragma once
@@ -80,10 +80,10 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 //   PORTA.CR11 = INPUT_FLOATING;
 //   PORTC.CR15 = OUTPUT_PUSH_PULL;
 //   ...
-#define   INPUT_FLOATING      0
-#define   INPUT_PULL_UP       1
-#define   OUTPUT_OPEN_DRAIN   0
-#define   OUTPUT_PUSH_PULL    1
+#define   CR1_INPUT_FLOATING      0
+#define   CR1_INPUT_PULL_UP       1
+#define   CR1_OUTPUT_OPEN_DRAIN   0
+#define   CR1_OUTPUT_PUSH_PULL    1
 
 // Available CR2 I/O interrupts and speed
 //
@@ -95,10 +95,10 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 //   PORTA.CR21 = INPUT_INTERRUPT_ENABLED;
 //   PORTC.CR25 = OUTPUT_10MHZ;
 //   ...
-#define   INPUT_INTERRUPT_ENABLED     0
-#define   INPUT_INTERRUPT_DISABLED    1
-#define   OUTPUT_2MHZ                 0
-#define   OUTPUT_10MHZ                1
+#define   CR2_INPUT_INTERRUPT_ENABLED     0
+#define   CR2_INPUT_INTERRUPT_DISABLED    1
+#define   CR2_OUTPUT_2MHZ                 0
+#define   CR2_OUTPUT_10MHZ                1
 
 
 typedef struct
