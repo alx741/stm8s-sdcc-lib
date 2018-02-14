@@ -102,6 +102,41 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
 
 
 /* Interrupt controller */
+#define IRQ0  0        #define IRQ11 11      #define IRQ22 22
+#define IRQ1  1        #define IRQ12 12      #define IRQ23 23
+#define IRQ2  2        #define IRQ13 13      #define IRQ24 24
+#define IRQ3  3        #define IRQ14 14      #define IRQ25 25
+#define IRQ4  4        #define IRQ15 15      #define IRQ26 26
+#define IRQ5  5        #define IRQ16 16      #define IRQ27 27
+#define IRQ6  6        #define IRQ17 17      #define IRQ28 28
+#define IRQ7  7        #define IRQ18 18      #define IRQ29 29
+#define IRQ8  8        #define IRQ19 19
+#define IRQ9  9        #define IRQ20 20
+#define IRQ10 10       #define IRQ21 21
+
+// Available IRQs
+//
+// e.g.   void custom_isr(void) __interrupt(IRQ_EXTI0_PORTA) { }
+#define   IRQ_TLI                        0
+#define   IRQ_AWU                        1
+#define   IRQ_CLK                        2
+#define   IRQ_EXTI0_PORTA                3
+#define   IRQ_EXTI1_PORTB                4
+#define   IRQ_EXTI2_PORTC                5
+#define   IRQ_EXTI3_PORTD                6
+#define   IRQ_EXTI4_PORTE                7
+#define   IRQ_SPI_END_TRANSFER           10
+#define   IRQ_TIM1                       11
+#define   IRQ_TIM1_CAPTURE_COMPARE       12
+#define   IRQ_TIM2                       13
+#define   IRQ_TIM2_CAPTURE_COMPARE       14
+#define   IRQ_UART1_TX_COMPLETE          17
+#define   IRQ_UART1_DATA_FULL            18
+#define   IRQ_I2C                        19
+#define   IRQ_ADC1                       22
+#define   IRQ_TIM4                       23
+#define   IRQ_FLASH                      24
+
 typedef struct
 {
     unsigned VECT0SPR  : 2;
@@ -136,13 +171,17 @@ typedef struct
     unsigned VECT29SPR : 2;
 } ITC_SPR_t;
 
-#define SPR_LEVEL_0  0b10
-#define SPR_LEVEL_1  0b01
-#define SPR_LEVEL_2  0b00
-#define SPR_LEVEL_3  0b11
-
 volatile __at(0x7F0A) uint8_t   CCR;
 volatile __at(0x7F70) ITC_SPR_t ITC_SPR;
+
+// Available Software Priorities for ITC_SPR registers
+//
+// e.g.   ITC_SPR.VECT4SPR = SP_LEVEL_2;
+#define SP_LEVEL_0  0b10
+#define SP_LEVEL_1  0b01
+#define SP_LEVEL_2  0b00
+#define SP_LEVEL_3  0b11
+
 
 volatile __at(0x50A0) uint8_t EXTI_CR1;
 volatile __at(0x50A1) uint8_t EXTI_CR2;
