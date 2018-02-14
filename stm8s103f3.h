@@ -34,11 +34,15 @@
 #define _OPTION_BYTES_BASE  0x4800
 #define _UNIQUE_ID_BASE     0x4865
 #define _GPIO_PERIPH_BASE   0x5000
+#define _CPU_ITC_BASE       0x7F00
 
 
 /*
- * Unique ID
+ * Registers
+ * ---------
  */
+
+/* Unique ID */
 typedef struct
 {
     uint16_t X_COORD_WAFER;
@@ -51,9 +55,7 @@ typedef struct
 volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 
 
-/*
- * GPIO ports
- */
+/* GPIO ports */
 typedef struct
 {
     union
@@ -97,3 +99,50 @@ volatile __at(_GPIO_PERIPH_BASE + 10) GPIO_PORT_t PORTC;
 volatile __at(_GPIO_PERIPH_BASE + 15) GPIO_PORT_t PORTD;
 volatile __at(_GPIO_PERIPH_BASE + 20) GPIO_PORT_t PORTE;
 volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
+
+
+/* Interrupt controller */
+typedef struct
+{
+    unsigned VECT0SPR  : 2;
+    unsigned VECT1SPR  : 2;
+    unsigned VECT2SPR  : 2;
+    unsigned VECT3SPR  : 2;
+    unsigned VECT4SPR  : 2;
+    unsigned VECT5SPR  : 2;
+    unsigned VECT6SPR  : 2;
+    unsigned VECT7SPR  : 2;
+    unsigned VECT8SPR  : 2;
+    unsigned VECT9SPR  : 2;
+    unsigned VECT10SPR : 2;
+    unsigned VECT11SPR : 2;
+    unsigned VECT12SPR : 2;
+    unsigned VECT13SPR : 2;
+    unsigned VECT14SPR : 2;
+    unsigned VECT15SPR : 2;
+    unsigned VECT16SPR : 2;
+    unsigned VECT17SPR : 2;
+    unsigned VECT18SPR : 2;
+    unsigned VECT19SPR : 2;
+    unsigned VECT20SPR : 2;
+    unsigned VECT21SPR : 2;
+    unsigned VECT22SPR : 2;
+    unsigned VECT23SPR : 2;
+    unsigned VECT24SPR : 2;
+    unsigned VECT25SPR : 2;
+    unsigned VECT26SPR : 2;
+    unsigned VECT27SPR : 2;
+    unsigned VECT28SPR : 2;
+    unsigned VECT29SPR : 2;
+} ITC_SPR_t;
+
+#define SPR_LEVEL_0  0b10
+#define SPR_LEVEL_1  0b01
+#define SPR_LEVEL_2  0b00
+#define SPR_LEVEL_3  0b11
+
+volatile __at(0x7F0A) uint8_t   CCR;
+volatile __at(0x7F70) ITC_SPR_t ITC_SPR;
+
+volatile __at(0x50A0) uint8_t EXTI_CR1;
+volatile __at(0x50A1) uint8_t EXTI_CR2;
