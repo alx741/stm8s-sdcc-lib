@@ -95,6 +95,7 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 //
 // e.g. Use the LSI clock as output clock
 //   ...
+//   CLK_CCOR.CCOEN = 1;
 //   CLK_CCOR.CCOSEL = CCOR_LSI;
 //   ...
 #define   CCOR_HSIDIV        0b0000
