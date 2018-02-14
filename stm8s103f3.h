@@ -62,14 +62,14 @@ typedef struct
         uint8_t ODR;
         struct
         {
-            unsigned OP0 : 1;
-            unsigned OP1 : 1;
-            unsigned OP2 : 1;
-            unsigned OP3 : 1;
-            unsigned OP4 : 1;
-            unsigned OP5 : 1;
-            unsigned OP6 : 1;
-            unsigned OP7 : 1;
+            unsigned OUT0 : 1;
+            unsigned OUT1 : 1;
+            unsigned OUT2 : 1;
+            unsigned OUT3 : 1;
+            unsigned OUT4 : 1;
+            unsigned OUT5 : 1;
+            unsigned OUT6 : 1;
+            unsigned OUT7 : 1;
         };
     };
     union
@@ -77,14 +77,14 @@ typedef struct
         uint8_t IDR;
         struct
         {
-            unsigned IP0 : 1;
-            unsigned IP1 : 1;
-            unsigned IP2 : 1;
-            unsigned IP3 : 1;
-            unsigned IP4 : 1;
-            unsigned IP5 : 1;
-            unsigned IP6 : 1;
-            unsigned IP7 : 1;
+            unsigned IN0 : 1;
+            unsigned IN1 : 1;
+            unsigned IN2 : 1;
+            unsigned IN3 : 1;
+            unsigned IN4 : 1;
+            unsigned IN5 : 1;
+            unsigned IN6 : 1;
+            unsigned IN7 : 1;
         };
     };
     uint8_t DDR;
@@ -103,17 +103,6 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t PORTF;
 /*
  * Interrupt controller
  */
-#define IRQ0  0        #define IRQ11 11      #define IRQ22 22
-#define IRQ1  1        #define IRQ12 12      #define IRQ23 23
-#define IRQ2  2        #define IRQ13 13      #define IRQ24 24
-#define IRQ3  3        #define IRQ14 14      #define IRQ25 25
-#define IRQ4  4        #define IRQ15 15      #define IRQ26 26
-#define IRQ5  5        #define IRQ16 16      #define IRQ27 27
-#define IRQ6  6        #define IRQ17 17      #define IRQ28 28
-#define IRQ7  7        #define IRQ18 18      #define IRQ29 29
-#define IRQ8  8        #define IRQ19 19
-#define IRQ9  9        #define IRQ20 20
-#define IRQ10 10       #define IRQ21 21
 
 // Available IRQs
 //
