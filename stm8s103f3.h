@@ -78,12 +78,12 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 //   PORTC.DDR5 = OUTPUT_MODE;
 //
 //   PORTA.CR11 = INPUT_FLOATING;
-//   PORTC.CR15 = OUTPUT_PUSH-PULL;
+//   PORTC.CR15 = OUTPUT_PUSH_PULL;
 //   ...
 #define   INPUT_FLOATING      0
-#define   INPUT_PULL-UP       1
+#define   INPUT_PULL_UP       1
 #define   OUTPUT_OPEN_DRAIN   0
-#define   OUTPUT_PUSH-PULL    1
+#define   OUTPUT_PUSH_PULL    1
 
 // Available CR2 I/O interrupts and speed
 //
