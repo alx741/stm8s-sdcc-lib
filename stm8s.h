@@ -28,8 +28,9 @@
 #include <stdint.h>
 
 
-/*
- * Memory map
+/* ----------------------------------------------
+ *   Memory map
+ * ----------------------------------------------
  */
 #define _RAM_BASE           0x0000
 #define _EEPROM_BASE        0x4000
@@ -41,8 +42,9 @@
 
 
 
-/*
- * Unique ID
+/* ----------------------------------------------
+ *   Unique ID
+ * ----------------------------------------------
  */
 typedef struct
 {
@@ -58,8 +60,9 @@ volatile __at(_UNIQUE_ID_BASE)  UNIQUE_ID_t UNIQUE_ID;
 
 
 
-/*
- * Clock
+/* ----------------------------------------------
+ *   Clock Control (CLK)
+ * ----------------------------------------------
  */
 
 // Available master clocks
@@ -209,8 +212,28 @@ volatile __at(_CLK_BASE + 0x0D) CLK_SWIMCCR_t   CLK_SWIMCCR;
 
 
 
-/*
- * GPIO ports
+/* ----------------------------------------------
+ *   Reset (RST)
+ * ----------------------------------------------
+ */
+
+typedef struct
+{
+    unsigned WWDGF  : 1;
+    unsigned IWDGF  : 1;
+    unsigned ILLOPF : 1;
+    unsigned SWIMF  : 1;
+    unsigned EMCF   : 1;
+} RST_SR_t;
+
+volatile __at(0x50B3) RST_SR_t   RST_SR;
+
+
+
+
+/* ----------------------------------------------
+ *   General purpose I/O ports (GPIO)
+ * ----------------------------------------------
  */
 
 // Available Data Directions
@@ -343,8 +366,9 @@ volatile __at(_GPIO_PERIPH_BASE + 25) GPIO_PORT_t   PORTF;
 
 
 
-/*
- * Interrupt controller
+/* ----------------------------------------------
+ *   Interrupt controller (ITC)
+ * ----------------------------------------------
  */
 
 #define enable_interrupts()  {__asm__("rim\n");}
@@ -455,21 +479,3 @@ volatile __at(0x7F0A) uint8_t      CCR;
 volatile __at(0x7F70) ITC_SPR_t    ITC_SPR;
 volatile __at(0x50A0) EXTI_CR1_t   EXTI_CR1;
 volatile __at(0x50A1) EXTI_CR2_t   EXTI_CR2;
-
-
-
-
-/*
- * Reset
- */
-
-typedef struct
-{
-    unsigned WWDGF  : 1;
-    unsigned IWDGF  : 1;
-    unsigned ILLOPF : 1;
-    unsigned SWIMF  : 1;
-    unsigned EMCF   : 1;
-} RST_SR_t;
-
-volatile __at(0x50B3) RST_SR_t   RST_SR;
