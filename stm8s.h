@@ -479,3 +479,107 @@ volatile __at(0x7F0A) uint8_t      CCR;
 volatile __at(0x7F70) ITC_SPR_t    ITC_SPR;
 volatile __at(0x50A0) EXTI_CR1_t   EXTI_CR1;
 volatile __at(0x50A1) EXTI_CR2_t   EXTI_CR2;
+
+
+
+
+/* --------------------------------------------------------
+ *   Universal asynchronous receiver transmitter (UART)
+ * --------------------------------------------------------
+ */
+
+typedef struct
+{
+    unsigned PE     : 1;
+    unsigned FE     : 1;
+    unsigned NF     : 1;
+    unsigned OR_LHE : 1;
+    unsigned IDLE   : 1;
+    unsigned RXNE   : 1;
+    unsigned TC     : 1;
+    unsigned TXE    : 1;
+} UART_SR_t;
+
+typedef struct
+{
+    unsigned LSB_UART_DIV : 4;
+    unsigned MSB_UART_DIV : 4;
+} UART_BRR2_t;
+
+typedef struct
+{
+    unsigned PIEN  : 1;
+    unsigned PS    : 1;
+    unsigned PCEN  : 1;
+    unsigned WAKE  : 1;
+    unsigned M     : 1;
+    unsigned UARTD : 1;
+    unsigned T8    : 1;
+    unsigned R8    : 1;
+} UART_CR1_t;
+
+typedef struct
+{
+    unsigned SBK   : 1;
+    unsigned RWU   : 1;
+    unsigned REN   : 1;
+    unsigned TEN   : 1;
+    unsigned ILIEN : 1;
+    unsigned RIEN  : 1;
+    unsigned TCIEN : 1;
+    unsigned TIEN  : 1;
+} UART_CR2_t;
+
+typedef struct
+{
+    unsigned LBCL  : 1;
+    unsigned CPHA  : 1;
+    unsigned CPOL  : 1;
+    unsigned CLKEN : 1;
+    unsigned STOP  : 2;
+    unsigned LINEN : 1;
+} UART_CR3_t;
+
+typedef struct
+{
+    unsigned ADD    : 4;
+    unsigned LBDF   : 1;
+    unsigned LBDL   : 1;
+    unsigned LBDIEN : 1;
+} UART_CR4_t;
+
+typedef struct
+{
+    unsigned       : 1;
+    unsigned IREN  : 1;
+    unsigned IRLP  : 1;
+    unsigned HDSEL : 1;
+    unsigned NACK  : 1;
+    unsigned SCEN  : 1;
+} UART_CR5_t;
+
+typedef struct
+{
+    unsigned LSF    : 1;
+    unsigned LHDF   : 1;
+    unsigned LHDIEN : 1;
+    unsigned        : 1;
+    unsigned LASE   : 1;
+    unsigned LSLV   : 1;
+    unsigned        : 1;
+    unsigned LDUM   : 1;
+} UART_CR6_t;
+
+#define _UART1_BASE   0x5230
+volatile __at(_UART1_BASE + 0x00) UART_SR_t     UART_SR;
+volatile __at(_UART1_BASE + 0x01) uint8_t       UART_DR;
+volatile __at(_UART1_BASE + 0x02) uint16_t      UART_BRR;
+volatile __at(_UART1_BASE + 0x02) uint8_t       UART_BRR1;
+volatile __at(_UART1_BASE + 0x03) UART_BRR2_t   UART_BRR2;
+volatile __at(_UART1_BASE + 0x04) UART_CR1_t    UART_CR1;
+volatile __at(_UART1_BASE + 0x05) UART_CR2_t    UART_CR2;
+volatile __at(_UART1_BASE + 0x06) UART_CR3_t    UART_CR3;
+volatile __at(_UART1_BASE + 0x07) UART_CR4_t    UART_CR4;
+volatile __at(_UART1_BASE + 0x08) UART_CR5_t    UART_CR5;
+volatile __at(_UART1_BASE + 0x09) uint8_t       UART_GRT;
+volatile __at(_UART1_BASE + 0x0A) uint8_t       UART_PSCR;
