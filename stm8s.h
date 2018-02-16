@@ -502,12 +502,6 @@ typedef struct
 
 typedef struct
 {
-    unsigned LSB_UART_DIV : 4;
-    unsigned MSB_UART_DIV : 4;
-} UART_BRR2_t;
-
-typedef struct
-{
     unsigned PIEN  : 1;
     unsigned PS    : 1;
     unsigned PCEN  : 1;
@@ -575,7 +569,7 @@ volatile __at(_UART1_BASE + 0x00) UART_SR_t     UART_SR;
 volatile __at(_UART1_BASE + 0x01) uint8_t       UART_DR;
 volatile __at(_UART1_BASE + 0x02) uint16_t      UART_BRR;
 volatile __at(_UART1_BASE + 0x02) uint8_t       UART_BRR1;
-volatile __at(_UART1_BASE + 0x03) UART_BRR2_t   UART_BRR2;
+volatile __at(_UART1_BASE + 0x03) uint8_t       UART_BRR2;
 volatile __at(_UART1_BASE + 0x04) UART_CR1_t    UART_CR1;
 volatile __at(_UART1_BASE + 0x05) UART_CR2_t    UART_CR2;
 volatile __at(_UART1_BASE + 0x06) UART_CR3_t    UART_CR3;
