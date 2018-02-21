@@ -606,11 +606,6 @@ typedef struct
 
 typedef struct
 {
-    unsigned FREQ : 6;
-} I2C_FREQR_t;
-
-typedef struct
-{
     unsigned ADD0 : 1;
     unsigned ADD  : 7;
 } I2C_OARL_T;
@@ -677,7 +672,7 @@ typedef struct
 #define _I2C_BASE   0x5210
 volatile __at(_I2C_BASE + 0x00) I2C_CR1_t     I2C_CR1;
 volatile __at(_I2C_BASE + 0x01) I2C_CR2_t     I2C_CR2;
-volatile __at(_I2C_BASE + 0x02) I2C_FREQR_t   I2C_FREQR;
+volatile __at(_I2C_BASE + 0x02) uint8_t       I2C_FREQR;
 volatile __at(_I2C_BASE + 0x03) I2C_OARL_T    I2C_OARL;
 volatile __at(_I2C_BASE + 0x04) I2C_OARH_T    I2C_OARH;
 volatile __at(_I2C_BASE + 0x06) uint8_t       I2C_DR;
@@ -685,5 +680,7 @@ volatile __at(_I2C_BASE + 0x07) I2C_SR1_T     I2C_SR1;
 volatile __at(_I2C_BASE + 0x08) I2C_SR2_T     I2C_SR2;
 volatile __at(_I2C_BASE + 0x09) I2C_SR3_T     I2C_SR3;
 volatile __at(_I2C_BASE + 0x0A) I2C_ITR_T     I2C_ITR;
+volatile __at(_I2C_BASE + 0x0B) uint16_t      I2C_CCR;
 volatile __at(_I2C_BASE + 0x0B) uint8_t       I2C_CCRL;
 volatile __at(_I2C_BASE + 0x0C) I2C_CCRH_t    I2C_CCRH;
+volatile __at(_I2C_BASE + 0x0D) uint8_t       I2C_TRISER;
