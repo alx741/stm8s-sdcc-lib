@@ -577,3 +577,113 @@ volatile __at(_UART1_BASE + 0x07) UART_CR4_t    UART_CR4;
 volatile __at(_UART1_BASE + 0x08) UART_CR5_t    UART_CR5;
 volatile __at(_UART1_BASE + 0x09) uint8_t       UART_GRT;
 volatile __at(_UART1_BASE + 0x0A) uint8_t       UART_PSCR;
+
+
+
+
+/* --------------------------------------------------------
+ *   Inter-integrated circuit interface (I2C)
+ * --------------------------------------------------------
+ */
+
+typedef struct
+{
+    unsigned PE        : 1;
+    unsigned           : 5;
+    unsigned ENGC      : 1;
+    unsigned NOSTRETCH : 1;
+} I2C_CR1_t;
+
+typedef struct
+{
+    unsigned START : 1;
+    unsigned STOP  : 1;
+    unsigned ACK   : 1;
+    unsigned POS   : 1;
+    unsigned       : 3;
+    unsigned SWRST : 1;
+} I2C_CR2_t;
+
+typedef struct
+{
+    unsigned FREQ : 6;
+} I2C_FREQR_t;
+
+typedef struct
+{
+    unsigned ADD0 : 1;
+    unsigned ADD  : 7;
+} I2C_OARL_T;
+
+typedef struct
+{
+    unsigned         : 1;
+    unsigned ADD     : 2;
+    unsigned         : 3;
+    unsigned ADDCONF : 1;
+    unsigned ADDMODE : 1;
+} I2C_OARH_T;
+
+typedef struct
+{
+    unsigned SB    : 1;
+    unsigned ADDR  : 1;
+    unsigned BTF   : 1;
+    unsigned ADD10 : 1;
+    unsigned STOPF : 1;
+    unsigned       : 1;
+    unsigned RXNE  : 1;
+    unsigned TXE   : 1;
+} I2C_SR1_T;
+
+typedef struct
+{
+    unsigned BERR : 1;
+    unsigned ARLO : 1;
+    unsigned AF   : 1;
+    unsigned OVR  : 1;
+    unsigned      : 1;
+    unsigned WUFH : 1;
+    unsigned      : 2;
+} I2C_SR2_T;
+
+typedef struct
+{
+    unsigned MSL     : 1;
+    unsigned BUSY    : 1;
+    unsigned TRA     : 1;
+    unsigned         : 1;
+    unsigned GENCALL : 1;
+    unsigned         : 2;
+    unsigned DUALF   : 1;
+} I2C_SR3_T;
+
+typedef struct
+{
+    unsigned ITERREN : 1;
+    unsigned ITEVTEN : 1;
+    unsigned ITBUFEN : 1;
+    unsigned         : 5;
+} I2C_ITR_T;
+
+typedef struct
+{
+    unsigned CCR  : 4;
+    unsigned      : 2;
+    unsigned DUTY : 1;
+    unsigned FS   : 1;
+} I2C_CCRH_t;
+
+#define _I2C_BASE   0x5210
+volatile __at(_I2C_BASE + 0x00) I2C_CR1_t     I2C_CR1;
+volatile __at(_I2C_BASE + 0x01) I2C_CR2_t     I2C_CR2;
+volatile __at(_I2C_BASE + 0x02) I2C_FREQR_t   I2C_FREQR;
+volatile __at(_I2C_BASE + 0x03) I2C_OARL_T    I2C_OARL;
+volatile __at(_I2C_BASE + 0x04) I2C_OARH_T    I2C_OARH;
+volatile __at(_I2C_BASE + 0x06) uint8_t       I2C_DR;
+volatile __at(_I2C_BASE + 0x07) I2C_SR1_T     I2C_SR1;
+volatile __at(_I2C_BASE + 0x08) I2C_SR2_T     I2C_SR2;
+volatile __at(_I2C_BASE + 0x09) I2C_SR3_T     I2C_SR3;
+volatile __at(_I2C_BASE + 0x0A) I2C_ITR_T     I2C_ITR;
+volatile __at(_I2C_BASE + 0x0B) uint8_t       I2C_CCRL;
+volatile __at(_I2C_BASE + 0x0C) I2C_CCRH_t    I2C_CCRH;
