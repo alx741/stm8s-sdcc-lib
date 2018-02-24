@@ -1,0 +1,10 @@
+*.asm
+*.cdb
+*.ihx
+*.lk
+*.lst
+*.map
+*.rel
+*.rst
+*.sym
+stm8s.lib
