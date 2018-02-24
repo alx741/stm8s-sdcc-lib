@@ -15,16 +15,7 @@
  * Copyright 2018 Daniel Campoverde Carrión [alx741]
  */
 
-
-/*
- * Registers and configuration values for STM8S devices
- *
- * To use it, include this file in your C code:
- *      #include "some/path/stm8s.h"
- */
-
 #pragma once
-
 #include <stdint.h>
 
 
