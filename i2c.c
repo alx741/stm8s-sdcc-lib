@@ -15,6 +15,7 @@
 
 #include "i2c.h"
 #include "stm8s.h"
+#include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -63,6 +64,27 @@ void i2c_transmit_byte(uint8_t data)
 
 uint8_t i2c_receive_byte(void)
 {
+    I2C_CR2.ACK = false;
+    i2c_stop();
     while (! I2C_SR1.RXNE);
     return I2C_DR;
+}
+
+void i2c_receive_bytestring(uint8_t *dest, size_t n)
+{
+    size_t index = 0;
+
+    I2C_CR2.ACK = true;
+    while (index < n-2)
+    {
+        while (! I2C_SR1.RXNE);
+        dest[index++] = I2C_DR;
+    }
+
+    // Receive second last byte
+    while (! I2C_SR1.RXNE);
+    dest[index++] = I2C_DR;
+
+    // Receive last byte and generate NACK
+    dest[index] = i2c_receive_byte();
 }
