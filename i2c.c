@@ -37,16 +37,16 @@ void i2c_stop(void)
     while (I2C_SR3.MSL);
 }
 
-void i2c_select_slave(uint8_t addr, I2C_MODE mode)
+void i2c_slave_select(uint8_t addr, I2C_MODE mode)
 {
     volatile uint8_t dummy;
 
     switch (mode)
     {
-        case I2C_READ:
+        case I2C_RECEIVE:
             I2C_DR = addr | 0x01;
             break;
-        case I2C_WRITE:
+        case I2C_TRANSMIT:
             I2C_DR = addr | 0x00;
             break;
     }
