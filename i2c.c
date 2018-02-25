@@ -11,6 +11,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright 2018 Daniel Campoverde Carrión [alx741]
  */
 
 #include "i2c.h"
