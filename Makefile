@@ -20,10 +20,10 @@ RELS := ${INPUTS:.c=.rel}
 OUTPUT = stm8s.lib
 
 $(OUTPUT): $(RELS)
-	~/sdcc/bin/sdar -rc $@ $(RELS)
+	sdar -rc $@ $(RELS)
 
 %.rel: %.c
-	~/sdcc/bin/sdcc $(CFLAGS) -c $<
+	sdcc $(CFLAGS) -c $<
 
 clean:
 	rm -f *.map *.rst *.cdb *.asm *.lst *.sym $(RELS) $(OUTPUT)
