@@ -18,6 +18,13 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+void i2c_init_100khz(void)
+{
+    I2C_FREQR = 2;     // 2 MHz
+    I2C_CCR = 0x000A;  // 100 KHz
+    I2C_CR1.PE = true; // Enable peripheral
+}
+
 void i2c_start(void)
 {
     I2C_CR2.START = true;

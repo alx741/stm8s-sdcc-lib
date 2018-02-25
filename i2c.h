@@ -19,8 +19,9 @@
 
 typedef enum I2C_MODE_t {I2C_READ, I2C_WRITE} I2C_MODE;
 
+void i2c_init_100khz(void);
 void i2c_start(void);
 void i2c_stop(void);
 void i2c_select_slave(uint8_t addr, I2C_MODE mode);
 void i2c_transmit_byte(uint8_t data);
-uint8_t i2c_receive_byte(uint8_t addr);
+uint8_t i2c_receive_byte(void);
