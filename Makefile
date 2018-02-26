@@ -24,7 +24,7 @@ $(OUTPUT): $(RELS)
 	sdar -rc $@ $(RELS)
 
 %.rel: %.c
-	sdcc $(CFLAGS) -c $<
+	sdcc $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.map *.rst *.cdb *.asm *.lst *.sym $(RELS) $(OUTPUT)
+	rm -f ${RELS:.rel=.map} ${RELS:.rel=.rst} ${RELS:.rel=.cdb} ${RELS:.rel=.asm} ${RELS:.rel=.lst} ${RELS:.rel=.sym} $(RELS) $(OUTPUT)
