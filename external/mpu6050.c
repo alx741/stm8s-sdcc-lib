@@ -18,9 +18,24 @@
 #include "mpu6050.h"
 #include "mpu6050_registers.h"
 #include "../i2c.h"
+#include <stdbool.h>
 
+#define MPU_AD0_LOW_ADDR 0b11010000
+#define MPU_AD0_HIGH_ADDR 0b11010010
 
-#define MPU_ADDR 0b11010000
+static uint8_t MPU_ADDR = MPU_AD0_LOW_ADDR;
+
+void mpu6050_select_address(bool ad0)
+{
+    if (ad0)
+    {
+        MPU_ADDR = MPU_AD0_HIGH_ADDR;
+    }
+    else
+    {
+        MPU_ADDR = MPU_AD0_LOW_ADDR;
+    }
+}
 
 void mpu6050_wake_up(void)
 {

@@ -29,4 +29,5 @@
  * to give the device some time.
  */
 
+void mpu6050_select_address(bool ad0);
 void mpu6050_wake_up(void);
