@@ -21,20 +21,20 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-void i2c_init_100khz(void)
+inline void i2c_init_100khz(void)
 {
     I2C_FREQR = 2;     // 2 MHz
     I2C_CCR = 0x000A;  // 100 KHz
     I2C_CR1.PE = true; // Enable peripheral
 }
 
-void i2c_start(void)
+inline void i2c_start(void)
 {
     I2C_CR2.START = true;
     while (! I2C_SR1.SB);
 }
 
-void i2c_stop(void)
+inline void i2c_stop(void)
 {
     I2C_CR2.STOP = true;
     while (I2C_SR3.MSL);
@@ -58,13 +58,13 @@ void i2c_slave_select(uint8_t addr, I2C_MODE mode)
     dummy = (uint8_t) I2C_SR3.BUSY;
 }
 
-void i2c_transmit_byte(uint8_t data)
+inline void i2c_transmit_byte(uint8_t data)
 {
     I2C_DR = data;
     while (! I2C_SR1.TXE);
 }
 
-uint8_t i2c_receive_byte(void)
+inline uint8_t i2c_receive_byte(void)
 {
     I2C_CR2.ACK = false;
     i2c_stop();
