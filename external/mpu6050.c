@@ -45,3 +45,23 @@ void mpu6050_wake_up(void)
     i2c_transmit_byte(0x00);
     i2c_stop();
 }
+
+uint8_t mpu6050_read_register(uint8_t reg_address)
+{
+    i2c_start();
+    i2c_slave_select(MPU_ADDR, I2C_TRANSMIT);
+    i2c_transmit_byte(reg_address);
+    i2c_start();
+    i2c_slave_select(MPU_ADDR, I2C_RECEIVE);
+    return i2c_receive_byte();
+}
+
+void mpu6050_accel(ACCEL_t *accel)
+{
+    i2c_start();
+    i2c_slave_select(MPU_ADDR, I2C_TRANSMIT);
+    i2c_transmit_byte(ACCEL);
+    i2c_start();
+    i2c_slave_select(MPU_ADDR, I2C_RECEIVE);
+    i2c_receive_bytestring((void*) accel, 6);
+}

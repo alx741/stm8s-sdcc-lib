@@ -17,7 +17,9 @@
 
 #pragma once
 
+#include "mpu6050_registers.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 /* MPU6050 boots up into sleep mode, clear the PWR_MGMT_1.SLEEP bit
  * in order to wake it up.
@@ -31,3 +33,5 @@
 
 void mpu6050_select_address(bool ad0);
 void mpu6050_wake_up(void);
+uint8_t mpu6050_read_register(uint8_t reg);
+void mpu6050_accel(ACCEL_t *accel);
