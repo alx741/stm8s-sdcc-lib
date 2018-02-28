@@ -30,11 +30,18 @@ const static float AFS_SEL_1 = 8192;
 const static float AFS_SEL_2 = 4096;
 const static float AFS_SEL_3 = 2048;
 
+const static float FS_SEL_0 = 131;
+const static float FS_SEL_1 = 65.5;
+const static float FS_SEL_2 = 32.8;
+const static float FS_SEL_3 = 16.4;
+
 static const float g = 9.80665;
 static uint8_t MPU_ADDR = MPU_AD0_LOW_ADDR;
 
-float LSB_scaling_factor(void);
+float accel_AFS_factor(void);
+float gyro_FS_factor(void);
 void accel_raw_to_g(ACCEL_RAW_t *accel_raw, ACCEL_t *accel);
+void gyro_raw_to_dps(GYRO_RAW_t *gyro_raw, GYRO_t *gyro);
 
 void mpu6050_select_address(bool ad0)
 {
@@ -81,12 +88,14 @@ void mpu6050_read_accel(ACCEL_t *accel)
 
 void mpu6050_read_gyro(GYRO_t *gyro)
 {
+    GYRO_RAW_t gyro_raw;
     i2c_start();
     i2c_slave_select(MPU_ADDR, I2C_TRANSMIT);
     i2c_transmit_byte(GYRO);
     i2c_start();
     i2c_slave_select(MPU_ADDR, I2C_RECEIVE);
-    i2c_receive_bytestring((void*) gyro, 6);
+    i2c_receive_bytestring((void*) &gyro_raw, 6);
+    gyro_raw_to_dps(&gyro_raw, gyro);
 }
 
 TEMP_RAW_t mpu6050_read_temp(void)
@@ -103,13 +112,21 @@ TEMP_RAW_t mpu6050_read_temp(void)
 
 void accel_raw_to_g(ACCEL_RAW_t *accel_raw, ACCEL_t *accel)
 {
-    float scaling_factor = LSB_scaling_factor();
+    float scaling_factor = accel_AFS_factor();
     accel->X = accel_raw->X / scaling_factor;
     accel->Y = accel_raw->Y / scaling_factor;
     accel->Z = accel_raw->Z / scaling_factor;
 }
 
-float LSB_scaling_factor(void)
+void gyro_raw_to_dps(GYRO_RAW_t *gyro_raw, GYRO_t *gyro)
+{
+    float scaling_factor = gyro_FS_factor();
+    gyro->X = gyro_raw->X / scaling_factor;
+    gyro->Y = gyro_raw->Y / scaling_factor;
+    gyro->Z = gyro_raw->Z / scaling_factor;
+}
+
+float accel_AFS_factor(void)
 {
     volatile ACCEL_CONFIG_t accel_config;
     uint8_t accel_config_byte = mpu6050_read_register(ACCEL_CONFIG);
@@ -128,6 +145,30 @@ float LSB_scaling_factor(void)
             break;
         case 3:
             return AFS_SEL_3;
+            break;
+    }
+    return 0;
+}
+
+float gyro_FS_factor(void)
+{
+    volatile GYRO_CONFIG_t gyro_config;
+    uint8_t gyro_config_byte = mpu6050_read_register(GYRO_CONFIG);
+    memcpy(&gyro_config, &gyro_config_byte, 1);
+
+    switch (gyro_config.FS_SEL)
+    {
+        case 0:
+            return FS_SEL_0;
+            break;
+        case 1:
+            return FS_SEL_1;
+            break;
+        case 2:
+            return FS_SEL_2;
+            break;
+        case 3:
+            return FS_SEL_3;
             break;
     }
     return 0;

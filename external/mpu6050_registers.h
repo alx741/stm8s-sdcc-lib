@@ -66,12 +66,23 @@ typedef struct
  * ----------------------------------------------
  */
 
-#define GYRO   0x43
+#define GYRO          0x43
+#define GYRO_CONFIG   0x1B
 
 typedef struct
 {
     int16_t X, Y, Z;
 } GYRO_RAW_t;
+
+typedef struct
+{
+    unsigned         : 3;
+    unsigned FS_SEL  : 2;
+    unsigned ZG_ST   : 1;
+    unsigned YG_ST   : 1;
+    unsigned XG_ST   : 1;
+} GYRO_CONFIG_t;
+
 
 
 /* ----------------------------------------------

@@ -28,11 +28,17 @@
  * to give the device some time.
  */
 
+/*
+ * Accelerometer measurements in gravity (g)
+ */
 typedef struct
 {
     float X, Y, Z;
 } ACCEL_t;
 
+/*
+ * Gyroscope measurements in degrees per second (dps)
+ */
 typedef struct
 {
     float X, Y, Z;
@@ -44,3 +50,9 @@ uint8_t mpu6050_read_register(uint8_t reg);
 void mpu6050_read_accel(ACCEL_t *accel);
 void mpu6050_read_gyro(GYRO_t *gyro);
 TEMP_RAW_t mpu6050_read_temp(void);
+
+/*
+ * Convert Accelerometer measurements from g to meters per second (mps) and back
+ */
+void accel_g_to_mps(ACCEL_t *accel);
+void accel_mps_to_g(ACCEL_t *accel);
