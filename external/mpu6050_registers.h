@@ -42,14 +42,23 @@ typedef struct
  * ----------------------------------------------
  */
 
-#define ACCEL   0x3B
+#define ACCEL          0x3B
+#define ACCEL_CONFIG   0x1C
 
 typedef struct
 {
-    uint16_t X;
-    uint16_t Y;
-    uint16_t Z;
-} ACCEL_t;
+    int16_t X, Y, Z;
+} ACCEL_RAW_t;
+
+
+typedef struct
+{
+    unsigned         : 3;
+    unsigned AFS_SEL : 2;
+    unsigned ZA_ST   : 1;
+    unsigned YA_ST   : 1;
+    unsigned XA_ST   : 1;
+} ACCEL_CONFIG_t;
 
 
 /* ----------------------------------------------
@@ -61,10 +70,8 @@ typedef struct
 
 typedef struct
 {
-    uint16_t X;
-    uint16_t Y;
-    uint16_t Z;
-} GYRO_t;
+    int16_t X, Y, Z;
+} GYRO_RAW_t;
 
 
 /* ----------------------------------------------
@@ -73,7 +80,7 @@ typedef struct
  */
 
 #define TEMP   0x41
-typedef uint16_t  TEMP_t;
+typedef int16_t  TEMP_RAW_t;
 
 
 /* ----------------------------------------------
