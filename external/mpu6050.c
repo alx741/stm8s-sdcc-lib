@@ -110,6 +110,20 @@ float mpu6050_read_temp(void)
     return (float) temp/340 + 36.53;
 }
 
+void accel_g_to_mps(ACCEL_t *accel)
+{
+    accel->X = accel->X * g;
+    accel->Y = accel->Y * g;
+    accel->Z = accel->Z * g;
+}
+
+void accel_mps_to_g(ACCEL_t *accel)
+{
+    accel->X = accel->X / g;
+    accel->Y = accel->Y / g;
+    accel->Z = accel->Z / g;
+}
+
 void accel_raw_to_g(ACCEL_RAW_t *accel_raw, ACCEL_t *accel)
 {
     float scaling_factor = accel_AFS_factor();
