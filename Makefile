@@ -15,7 +15,6 @@ CFLAGS += --std-sdcc11
 CFLAGS += -l$(MMCU)
 CFLAGS += -m$(MMCU)
 
-# INPUTS = $(wildcard ./*.c)
 INPUTS = $(shell find . -type f -name "*.c")
 RELS := ${INPUTS:.c=.rel}
 OUTPUT = stm8s.lib
