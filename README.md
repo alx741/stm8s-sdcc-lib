@@ -2,40 +2,28 @@ Library for *STM8S* devices and the *SDCC* compiler.
 
 ## Using
 
-Copy the `stm3s.h` file into your project directory and include it.
+Compile the library
 
-## Example
+    $ make
 
-Blink a LED on PB5 pin.
+Copy the content of the `example` directory to your project
 
-Let the file `main.c` be:
+    $ cp example/* ~/me/my-project
 
-```c
-#include "stm8s.h"
+Configure the parameters in the `Makefile`
 
-void delay(void)
-{
-    for (int delay_cnt = 0; delay_cnt < 30000; delay_cnt++) {}
-}
+* STM8SLIB_DIR
+* SRC_DIR
+* BINARY
+* PARTNO
 
-int main()
-{
 
-    PORTB.DDR5 = DDR_OUTPUT_MODE;
-    PORTB.CR15 = CR1_OUTPUT_PUSH_PULL;
+## Implemented
 
-    while (1)
-    {
-        delay();
-        PORTB.ODR5 ^= 1;
-    }
-}
-```
+* Low level registers are available in `stm8s.h` to be used like in `register.bit = value;`
+* UART
+* I2C
 
-Compile with:
+### External drivers
 
-    $ sdcc -lstm8 -mstm8 --out-fmt-ihx main.c -o main
-
-Flash with (assuming the STM8S103F3 part. Change accordingly):
-
-	$ stm8flash -pstm8s103f3 -cstlinkv2 -w main.ihx
+* MPU6050
